@@ -24,7 +24,7 @@ describe("Buy a t-shirt", () => {
     cy.get(".cart_navigation > .button").click();
 
     // click on pay by bank wire
-    cy.get("#HOOK_PAYMENT > div:nth-child(1) > div > p > a").click();
+    cy.get(".bankwire > span").click();
     // confirm order
     cy.get("#cart_navigation > .button").click();
 
