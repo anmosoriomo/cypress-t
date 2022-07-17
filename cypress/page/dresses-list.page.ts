@@ -7,7 +7,7 @@ class DressesListPage {
     this.dressName = `${this.dressItem} .product-name`;
   }
 
-  public getDressProduct() {
+  private getDressProduct() {
     // get object with all the dresses
     return cy.get(this.dressItem);
   }

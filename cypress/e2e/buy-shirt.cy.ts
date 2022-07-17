@@ -25,6 +25,7 @@ describe("Buy a t-shirt", () => {
   it("then the t-shirt should be bought", () => {
     // Arrange
     const validationMessage = "Your order on My Store is complete.";
+    const productName = "Faded Short Sleeve T-shirts";
     const userId = {
       email: "aperdomobo@gmail.com",
       password: "WorkshopProtractor",
@@ -33,7 +34,7 @@ describe("Buy a t-shirt", () => {
 
     // Action
     menuContentPage.goToTShirtMenu();
-    productListPage.addProductToCart();
+    productListPage.addProductToCart(productName);
     shoppingCartPage.goToShoppingCartMenu();
     shoppingCartPage.goToAuthenticationMenu();
     loginPage.fillIdFields(userId.email, userId.password);
