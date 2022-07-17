@@ -38,7 +38,7 @@ describe("Buy a t-shirt", () => {
     paymentStepPage.goToConfirmOrderMenu();
 
     // assertion
-    cy.get("#center_column > div > p > strong")
+    cy.get(".cheque-indent > .dark")
         .should("have.text", "Your order on My Store is complete.");
   });
 });
