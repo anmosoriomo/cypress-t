@@ -4,7 +4,7 @@ class PaymentStepPage {
 
   constructor() {
     this.paymentMethod = ".bankwire > span";
-    this.confirmOrderMenu = "#cart_navigation > .button";
+    this.confirmOrderMenu = "#cart_navigation > .button > span";
   }
 
   public selectPaymentMethod(): void {
