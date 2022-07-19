@@ -1,6 +1,8 @@
+import {Information, FormFields} from "../test-objects/personal-information";
+
 class PersonalFormPage {
   private personalFormPageURL: string;
-  private formFields: any;
+  private formFields: FormFields;
   private submitBtn: string;
 
   constructor() {
@@ -10,9 +12,9 @@ class PersonalFormPage {
       nameInput: "#firstName",
       lastNameInput: "#lastName",
       emailInput: "#userEmail",
-      genderInput: "[type='radio']",
+      genderInput: "#genterWrapper div.custom-control > .custom-control-input",
       mobileNumberInput: "#userNumber",
-      hobbiesInput: "[type='checkbox']", // checkboxes list
+      hobbiesInput: "#hobbiesWrapper div.custom-control > .custom-control-input",
       addresInput: "#currentAddress",
       // location: {state: "", city: "",},
     };
@@ -22,35 +24,29 @@ class PersonalFormPage {
     cy.visit(this.personalFormPageURL);
   }
 
-  public fillForm(personalInformation: any): void {
+  public fillForm(personalInformation: Information): void {
+    let hob: string;
+
     cy.get(this.formFields.nameInput).type(personalInformation.name);
     cy.get(this.formFields.lastNameInput).type(personalInformation.lastName);
     cy.get(this.formFields.emailInput).type(personalInformation.email);
-    // cy.get(this.formFields.genderInput)
-    //     .check(personalInformation.gender);
+    // eslint-disable-next-line cypress/no-force
     cy.get(this.formFields.genderInput)
         .check(personalInformation.gender, {force: true});
     cy.get(this.formFields.mobileNumberInput)
-        .type(personalInformation.mobileNumber);
+        .type(`${personalInformation.mobileNumber}`);
 
-    const hobbies = personalInformation.hobbies;
-    let aux: string;
-
-    console.log(hobbies);
-
-    hobbies.forEach((hobbie: string) => {
+    personalInformation.hobbies.forEach((hobbie) => {
       switch (hobbie) {
-        case "Sports":
-          aux = "1";
+        case "Sports": hob = "1";
           break;
-        case "Reading":
-          aux = "2";
+        case "Reading": hob = "2";
           break;
-        case "Music":
-          aux = "3";
+        case "Music": hob = "3";
           break;
       }
-      cy.get(this.formFields.hobbiesInput).check(aux, {force: true});
+      // eslint-disable-next-line cypress/no-force
+      cy.get(this.formFields.hobbiesInput).check(hob, {force: true});
     });
   }
 }

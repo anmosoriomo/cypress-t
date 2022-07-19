@@ -1,17 +1,18 @@
 import {MenuContentPage, ProductListPage,
   ShoppingCartPage, LoginPage, AddressStepPage,
-  ShippingStepPage, PaymentStepPage}
+  ShippingStepPage, PaymentStepPage,
+  validationMessage, productName, userId}
   from "../page/index";
 
-let menuContentPage: MenuContentPage;
-let productListPage: ProductListPage;
-let shoppingCartPage: ShoppingCartPage;
-let loginPage: LoginPage;
-let addressStepPage: AddressStepPage;
-let shippingStepPage: ShippingStepPage;
-let paymentStepPage: PaymentStepPage;
-
 describe("Buy a t-shirt", () => {
+  let menuContentPage: MenuContentPage;
+  let productListPage: ProductListPage;
+  let shoppingCartPage: ShoppingCartPage;
+  let loginPage: LoginPage;
+  let addressStepPage: AddressStepPage;
+  let shippingStepPage: ShippingStepPage;
+  let paymentStepPage: PaymentStepPage;
+
   before(() => {
     menuContentPage = new MenuContentPage;
     productListPage = new ProductListPage;
@@ -24,12 +25,6 @@ describe("Buy a t-shirt", () => {
 
   it("then the t-shirt should be bought", () => {
     // Arrange
-    const validationMessage = "Your order on My Store is complete.";
-    const productName = "Faded Short Sleeve T-shirts";
-    const userId = {
-      email: "aperdomobo@gmail.com",
-      password: "WorkshopProtractor",
-    };
     menuContentPage.visitMenuContentPage();
 
     // Action

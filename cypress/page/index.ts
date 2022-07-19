@@ -8,3 +8,12 @@ export {PaymentStepPage} from "./payment-step.page";
 export {DressesListPage} from "./dresses-list.page";
 export {PersonalFormPage} from "./personal-form.page";
 export {ConfirmationPage} from "./confirmation.page";
+
+// ***********************************************************
+
+export {Information, personalInformation, FormFields}
+  from "../test-objects/fill-form-object";
+export {expectedDressesList, numberOfDresses}
+  from "../test-objects/dresses-list-objects";
+export {validationMessage, productName, userId}
+  from "../test-objects/buy-tshirt-objects";
