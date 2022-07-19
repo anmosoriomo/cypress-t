@@ -1,4 +1,4 @@
-import {Information, FormFields} from "../test-objects/personal-information";
+import {Information, FormFields} from "../test-objects/fill-form-object";
 
 class PersonalFormPage {
   private personalFormPageURL: string;
