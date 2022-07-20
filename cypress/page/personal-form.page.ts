@@ -1,53 +1,83 @@
-import {Information, FormFields} from "../test-objects/fill-form-object";
+import {Information, FormFields, Months}
+  from "../test-objects/objects-types";
 
 class PersonalFormPage {
   private personalFormPageURL: string;
-  private formFields: FormFields;
+  private calendarBtn: string;
   private submitBtn: string;
+  private formFields: FormFields;
 
   constructor() {
     this.personalFormPageURL = "https://demoqa.com/automation-practice-form/";
+    this.calendarBtn = "#dateOfBirthInput";
     this.submitBtn = "#submit";
     this.formFields = {
       nameInput: "#firstName",
       lastNameInput: "#lastName",
       emailInput: "#userEmail",
-      genderInput: "#genterWrapper div.custom-control > .custom-control-input",
+      genderInput: ".custom-radio",
+      dateInput: {
+        month: ".react-datepicker__month-select",
+        year: ".react-datepicker__year-select",
+        day: ".react-datepicker__day",
+      },
       mobileNumberInput: "#userNumber",
-      hobbiesInput: "#hobbiesWrapper div.custom-control > .custom-control-input",
+      hobbiesInput: ".custom-checkbox",
       addresInput: "#currentAddress",
-      // location: {state: "", city: "",},
     };
+  }
+
+  private selectGender(info: Information): void {
+    cy.get(this.formFields.genderInput)
+        .filter(`:contains("${info.gender}")`)
+        .click();
+  }
+
+  private selectDate(info: Information): void {
+    const dateOfBirth = info.dateOfBirth.split(" ");
+    const month = dateOfBirth[1] as string;
+    const months: Months = {
+      Jan: "January", Feb: "February", Mar: "March",
+      Apr: "April", May: "May", Jun: "June",
+      Jul: "July", Aug: "August", Sep: "September",
+      Oct: "October", Nov: "November", Dic: "December",
+    };
+
+    cy.get(this.calendarBtn).click().then(() => {
+      cy.get(this.formFields.dateInput.month).select(months[month as keyof Months]);
+      cy.get(this.formFields.dateInput.year).select(dateOfBirth[2]);
+      cy.get(this.formFields.dateInput.day).filter(`:contains("${dateOfBirth[0]}")`).then(($elem) => {
+        if (dateOfBirth[0].length > 1) {
+          cy.wrap($elem).last().click();
+        } else {
+          cy.wrap($elem).first().click();
+        }
+      });
+    });
+  }
+
+  private selectHobbies(info: Information): void {
+    info.hobbies.forEach((hobbie) => {
+      cy.get(this.formFields.hobbiesInput)
+          .filter(`:contains("${hobbie}")`)
+          .click();
+    });
   }
 
   public visitPersonalFormPage(): void {
     cy.visit(this.personalFormPageURL);
   }
 
-  public fillForm(personalInformation: Information): void {
-    let hob: string;
-
-    cy.get(this.formFields.nameInput).type(personalInformation.name);
-    cy.get(this.formFields.lastNameInput).type(personalInformation.lastName);
-    cy.get(this.formFields.emailInput).type(personalInformation.email);
-    // eslint-disable-next-line cypress/no-force
-    cy.get(this.formFields.genderInput)
-        .check(personalInformation.gender, {force: true});
-    cy.get(this.formFields.mobileNumberInput)
-        .type(`${personalInformation.mobileNumber}`);
-
-    personalInformation.hobbies.forEach((hobbie) => {
-      switch (hobbie) {
-        case "Sports": hob = "1";
-          break;
-        case "Reading": hob = "2";
-          break;
-        case "Music": hob = "3";
-          break;
-      }
-      // eslint-disable-next-line cypress/no-force
-      cy.get(this.formFields.hobbiesInput).check(hob, {force: true});
-    });
+  public fillForm(personalInfo: Information): void {
+    cy.get(this.formFields.nameInput).type(personalInfo.name);
+    cy.get(this.formFields.lastNameInput).type(personalInfo.lastName);
+    cy.get(this.formFields.emailInput).type(personalInfo.email);
+    this.selectGender(personalInfo);
+    cy.get(this.formFields.mobileNumberInput).type(`${personalInfo.mobileNumber}`);
+    this.selectHobbies(personalInfo);
+    cy.get(this.formFields.addresInput).type(personalInfo.currentAddress);
+    this.selectDate(personalInfo);
+    cy.get(this.submitBtn).click({force: true});
   }
 }
 

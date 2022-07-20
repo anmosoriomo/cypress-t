@@ -7,12 +7,12 @@ export {ShippingStepPage} from "./shipping-step.page";
 export {PaymentStepPage} from "./payment-step.page";
 export {DressesListPage} from "./dresses-list.page";
 export {PersonalFormPage} from "./personal-form.page";
-export {ConfirmationPage} from "./confirmation.page";
+export {FormConfirmationPage} from "./form-confirmation.page";
 
 // ***********************************************************
 
-export {Information, personalInformation, FormFields}
-  from "../test-objects/fill-form-object";
+export {Information, FormFields, Months}
+  from "../test-objects/objects-types";
 export {expectedDressesList, numberOfDresses}
   from "../test-objects/dresses-list-objects";
 export {validationMessage, productName, userId}
